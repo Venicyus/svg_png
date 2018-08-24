@@ -6,6 +6,42 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import html2canvas from 'html2canvas-webpack';
 import SvgBadge from './svg-badge';
 
+import './index.css';
+
+const icons = {
+    size: 20,
+    config: [{
+        background: '#0e4aa3',
+        color: 'white',
+        text: '1',
+        textPosition: { x: 0, y: 4.4 }
+    },
+    {
+        background: '#0da247',
+        color: 'white',
+        text: '2',
+        textPosition: { x: 0.2, y: 4.4 }
+    },
+    {
+        background: '#a10d5c',
+        color: 'white',
+        text: '3',
+        textPosition: { x: 0.3, y: 4.4 }
+    },
+    {
+        background: '#686868',
+        color: 'white',
+        text: '4',
+        textPosition: { x: 0, y: 4.4 }
+    },
+    {
+        background: '#af5a1d',
+        color: 'white',
+        text: '5+',
+        textPosition: { x: 0.6, y: 4.8 }
+    }]
+};
+
 class App extends Component {
 
     constructor() {
@@ -26,12 +62,15 @@ class App extends Component {
 
     render() {
         let imagens = [];
-        const dataUri = 'data:image/svg+xml,' + encodeURIComponent(renderToStaticMarkup(<SvgBadge />));
-        imagens.push(<img src={dataUri} alt="" key="1" />);
+
+        icons.config.forEach((icon, index) => {
+            const dataUri = 'data:image/svg+xml,' + encodeURIComponent(renderToStaticMarkup(<SvgBadge config={icon} size={icons.size} />));
+            imagens.push(<img src={dataUri} alt="" key={index} />);
+        });
 
         return (
             <div>
-                <div id="imgs" style={{ width: 100 }}>
+                <div id="imgs" style={{ height: "20px", width: (icons.size) * icons.config.length + "px" }}>
                     {imagens}
                 </div>
                 <br />
